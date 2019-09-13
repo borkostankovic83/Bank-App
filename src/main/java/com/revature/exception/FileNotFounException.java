@@ -2,7 +2,7 @@ package com.revature.exception;
 
 import java.io.IOException;
 
-public class FileNotFounException extends IOException{
+public class FileNotFounException extends RuntimeException{
 	/**
 	 * 
 	 */

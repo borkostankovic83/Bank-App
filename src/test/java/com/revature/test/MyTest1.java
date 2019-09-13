@@ -10,15 +10,11 @@ import com.revature.controller.Controller;
 
 public class MyTest1 {
 
-		//Writing JUnit tests we need annotations and assert method
-		// the @Test annotation is the most important
-		
 		static Object myNeededObject;
-		
-		
+	
 		//Before and After are better to use because it keeps your
 		// tests independent
-		//Other annotations: setup and teardown with @Before and @After
+		//Other annotations: setup and tear down with @Before and @After
 		
 		@Before
 		public void setUp() {
@@ -36,8 +32,7 @@ public class MyTest1 {
 			Controller.withdraw(-100);
 		}		
 				
-		
-		
+
 		
 		@After
 		public void tearDown() {

@@ -32,7 +32,7 @@ public class UsernameAndPassword {
 	          Controller.displayMenu();	    	  							    	  				
 		
 	      } else {
-			System.out.println("Not quite, try again...");
+			System.err.println("Not quite, try again...");
 			usernameAndPassword();// if mismatch calling same method over and over			
 		  }
 

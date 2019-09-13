@@ -13,6 +13,7 @@ public class Main {
 
 	public static void main(String[] args) throws IOException  {
 		System.out.println("Welcome to the Bank!");
+		
 		// Call to MenuOptions Class and menuOptions method
 		MenuOptions.menuOptions();
 		

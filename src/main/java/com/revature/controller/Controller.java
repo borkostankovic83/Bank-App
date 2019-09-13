@@ -1,12 +1,11 @@
 package com.revature.controller;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import org.apache.log4j.Logger;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.SQLException;
-
 import com.revature.exception.FileNotFounException;
 import com.revature.exception.TransactionFaildException;
 import com.revature.model.Transaction;
@@ -20,6 +19,7 @@ import com.revature.service.UsernameAndPassword;
 public class Controller {
 	public static Logger logger = Logger.getLogger(Controller.class);
 	public static int id;
+	public static double amount;
 	public static String transactions;
 	public static int user_id;
 	static String userChoice;
@@ -50,10 +50,14 @@ public class Controller {
 			// if option not recognized go to default
 			switch (userChoice) {
 			case "1":
-				double amount;
+				
 				System.out.print("Amount to deposit: ");
-				amount = in.nextDouble();
+				try {
+				amount = in.nextDouble();				
 				deposit(amount);
+				}catch (InputMismatchException e) {
+					System.out.println("Cant deposit an nonumber!");
+				}				
 				break;
 			case "2":
 				System.out.print("Amount to withdraw: ");
@@ -61,7 +65,7 @@ public class Controller {
 				try {
 				withdraw(amount);
 				}catch (TransactionFaildException e) {
-					System.out.println(e.getMessage());
+				System.out.println(e.getMessage());
 				}
 				break;
 			case "3":
@@ -73,7 +77,7 @@ public class Controller {
 				in.close();
 				break;
 			default:
-				System.out.println("Option not recognized");
+				System.err.println("Option not recognized");
 				//logger.debug("Option not recognized");
 				break;
 			}
@@ -84,7 +88,11 @@ public class Controller {
 		in.close();
 		System.out.println("Thank You for Banking!");
 	}
-
+	/**
+	 *  Withdraw method takes care of logic 
+	 * and subtract withdraws amount to previous amount.
+	 * From there is updated to the database
+	 */
 	public static void withdraw(double amount) {
 		if (amount <= 0 || amount > UsernameAndPassword.currentUser.balance)
 			System.out.println("Withdrawal can't be completed.");				
@@ -97,17 +105,17 @@ public class Controller {
 					userDAO.updateUser(u);
 				}				
 			}
-//			try {
-//			TransDAO transDAO = new TransaDAOImplemnt();
-//			user_id = UsernameAndPassword.currentUser.id;
-//			transactions = "$(" + amount + ") has been withdrawn.";
-//			
-//			transDAO.createTeansaction(new Transaction(id, transactions, user_id));
-//			transaction.add(new Transaction(id, transactions, user_id));
-//			}catch (TransactionFaildException e) {
-//				System.out.println("Sorry, cant acces DB");
-//				System.out.println("problemm = " + e.getMessage());
-//			}
+			try {
+			TransDAO transDAO = new TransaDAOImplemnt();
+			user_id = UsernameAndPassword.currentUser.id;
+			transactions = "$(" + amount + ") has been withdrawn.";
+			
+			transDAO.createTeansaction(new Transaction(id, transactions, user_id));
+			transaction.add(new Transaction(id, transactions, user_id));
+			}catch (TransactionFaildException e) {
+				System.out.println("Sorry, cant acces DB");
+				System.out.println("problemm = " + e.getMessage());
+			}
 			try {
 				// BufferedWriter write to file i created
 				//I used writter.append so every time i go back 
@@ -118,15 +126,21 @@ public class Controller {
 				writer.append("\n");//makes new line
 				writer.append("$(" + amount + ") has been withdrawn.");
 				writer.close();
-			} catch (Exception e) {
-				System.out.println(e);
+			} catch (FileNotFounException e) {
+				System.out.println(e.getMessage());
+			} catch (IOException e) {				
+				e.printStackTrace();
 			}
 			//System.out.println("$" + amount + " has been withdrawn.");
 			logger.debug("$" + amount + " has been withdrawn.");
 		}
 		
 	}
-
+	/**
+	 *  Deposit method takes care of logic 
+	 * and add deposit amount to previous amount.
+	 * From there is updated to the database
+	 */
 	private static void deposit(double amount) throws IOException {
 		if (amount <= 0)
 			System.out.println("Can't deposit nonpositive amount.");

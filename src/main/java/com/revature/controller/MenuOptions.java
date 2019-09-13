@@ -5,7 +5,11 @@ import java.util.Scanner;
 import com.revature.service.AddUser;
 import com.revature.service.UsernameAndPassword;
 public class MenuOptions {
-	
+	/**
+	 * This is first menu what gives option for user 
+	 * to log in or create account as well t quit.
+	 * @throws IOException
+	 */
 	public static void menuOptions() throws IOException {
 		Scanner in = new Scanner(System.in);
 
@@ -35,11 +39,11 @@ public class MenuOptions {
 				System.out.println("Thank you for banking");
 				break;
 			default:
-				System.out.println("Option not recognized");
+				System.err.println("Option not recognized");
 				break;
 			}
 
-			System.out.println();
+			//System.out.println();
 
 		} while (!Controller.quit);//when variable quit is true quits
 		in.close();
