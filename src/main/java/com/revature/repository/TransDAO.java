@@ -6,9 +6,9 @@ public interface TransDAO {
 
 	Transaction getTansaction(int id);
 	
-	boolean createTeansaction(Transaction t);
+	boolean createTransaction(Transaction t);
 	
-	boolean updateTeansaction(Transaction t);
+	boolean updateTransaction(Transaction t);
 
 	boolean deleteTransaction(Transaction t);
 }

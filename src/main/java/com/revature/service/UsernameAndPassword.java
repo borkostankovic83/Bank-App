@@ -9,13 +9,15 @@ import com.revature.repository.UserDAO;
 
 public class UsernameAndPassword {
 	public static User currentUser;
-
-		// this method check user input for user name and password and
-		// validate if they are correct or not and depends of result
-		// Prompt to reenter or if is correct calling displayMenu Method
-		// what display banking options
+	/**
+	 *    This method check user input for user name and password and
+	 *	 validate if they are correct or not and depends of result
+	 *	 Prompt to reenter or if is correct calling displayMenu Method
+	 *	 what display banking options
+	 *
+	 * @throws IOException
+	 */		 
 		public static  void usernameAndPassword() throws IOException {
-			//User currentUser = null;
 			String userName;
 			String password;
 			Scanner sc = new Scanner(System.in);
@@ -32,10 +34,9 @@ public class UsernameAndPassword {
 	          Controller.displayMenu();	    	  							    	  				
 		
 	      } else {
-			System.err.println("Not quite, try again...");
+			System.err.println("Wrong username or password, try again!");
 			usernameAndPassword();// if mismatch calling same method over and over			
 		  }
-
 	     			
 			sc.close();
 		}

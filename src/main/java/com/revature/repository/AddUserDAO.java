@@ -12,6 +12,9 @@ import com.revature.utils.ConnectionUtil;
 import com.revature.utils.StreamCloser;
 
 public class AddUserDAO implements UserDAO {
+	/**
+	 * Returns user found by id, or null if no user found
+	 */
 
 	@Override
 	public User getUser(int id) {
@@ -149,7 +152,10 @@ public class AddUserDAO implements UserDAO {
 
 		return players;
 	}
-
+	/*
+	 *  Here it insert all data to create new user
+	 *  and insert in user table into database
+	 */
 	@Override
 	public boolean createUser(User u) {
 		Connection conn = null;

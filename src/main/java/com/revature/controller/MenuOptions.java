@@ -34,7 +34,7 @@ public class MenuOptions {
 				AddUser.addNewUser();
 				break;
 			case "3":
-				//thanks Qc and Adam I learned how to use static primitives
+				//quits a program
 				Controller.quit = true;
 				System.out.println("Thank you for banking");
 				break;
@@ -43,7 +43,6 @@ public class MenuOptions {
 				break;
 			}
 
-			//System.out.println();
 
 		} while (!Controller.quit);//when variable quit is true quits
 		in.close();

@@ -82,7 +82,6 @@ public class Controller {
 				break;
 			}
 
-			//System.out.println();
 
 		} while (!quit);
 		in.close();
@@ -105,17 +104,21 @@ public class Controller {
 					userDAO.updateUser(u);
 				}				
 			}
+			
+			// For current user insert withdraws informations into transaction table
 			try {
 			TransDAO transDAO = new TransaDAOImplemnt();
 			user_id = UsernameAndPassword.currentUser.id;
 			transactions = "$(" + amount + ") has been withdrawn.";
 			
-			transDAO.createTeansaction(new Transaction(id, transactions, user_id));
+			transDAO.createTransaction(new Transaction(id, transactions, user_id));
 			transaction.add(new Transaction(id, transactions, user_id));
 			}catch (TransactionFaildException e) {
 				System.out.println("Sorry, cant acces DB");
 				System.out.println("problemm = " + e.getMessage());
 			}
+			
+			
 			try {
 				// BufferedWriter write to file i created
 				//I used writter.append so every time i go back 
@@ -152,7 +155,19 @@ public class Controller {
 					u.setBalance((float) UsernameAndPassword.currentUser.balance);
 					userDAO.updateUser(u);
 				}				
-			}			
+			}
+			// For current user insert deposit informations into transaction table
+						try {
+						TransDAO transDAO = new TransaDAOImplemnt();
+						user_id = UsernameAndPassword.currentUser.id;
+						transactions = "$" + amount + " has been deposited.";
+						
+						transDAO.createTransaction(new Transaction(id, transactions, user_id));
+						transaction.add(new Transaction(id, transactions, user_id));
+						}catch (TransactionFaildException e) {
+							System.out.println("Sorry, cant acces DB");
+							System.out.println("problemm = " + e.getMessage());
+						}
 			
 			try {
 				// BufferedWriter write to file i created

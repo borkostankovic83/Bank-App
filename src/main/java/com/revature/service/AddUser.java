@@ -1,9 +1,11 @@
 package com.revature.service;
+
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import com.revature.controller.Controller;
 import com.revature.controller.MenuOptions;
 import com.revature.model.User;
 import com.revature.repository.AddUserDAO;
@@ -19,30 +21,28 @@ public class AddUser {
 	public static String accountType;
 	public static float balance;
 	public static ArrayList<User> users = new ArrayList<User>();
-	
-	
+
 	public static void addNewUser() throws IOException {
-		
-		User newUser = new User( id,"Mike", "Peterson", "mike23", "12345", "Saving", 5000);
+
+		User newUser = new User(id, "Mike", "Peterson", "mike23", "12345", "Saving", 5000);
 		users.add(newUser);
 		boolean validInput;
 
 		System.out.println("Enter a user information to register user");
-		
-		
-			System.out.print("Enter First Name: ");
-			firstName = sc.next();
-			System.out.print("Enter Last Name: ");
-			lastName = sc.next();
-			System.out.print("Enter Username: ");
-			userName = sc.next();
-			System.out.print("Enter Password: ");
-			password = sc.next();
-			System.out.print("Enter Cheking or Saving: ");
-			accountType = sc.next();
-			System.out.print("Enter how much you want to deposit: ");
-			do {
-				validInput = true;
+
+		System.out.print("Enter First Name: ");
+		firstName = sc.next();
+		System.out.print("Enter Last Name: ");
+		lastName = sc.next();
+		System.out.print("Enter Username: ");
+		userName = sc.next();
+		System.out.print("Enter Password: ");
+		password = sc.next();
+		System.out.print("Enter Cheking or Saving: ");
+		accountType = sc.next();
+		System.out.print("Enter how much you want to deposit: ");
+		do {
+			validInput = true;
 			if (sc.hasNextFloat())
 				balance = sc.nextFloat();
 			else
@@ -53,15 +53,16 @@ public class AddUser {
 				validInput = true;
 			}
 		} while (validInput == false);
-		
-			
-			UserDAO userDAO = new AddUserDAO();
-			userDAO.createUser(new User(id,firstName, lastName, userName, password, accountType, balance));
+	
+		UserDAO userDAO = new AddUserDAO();
+		userDAO.createUser(new User(id, firstName, lastName, userName, password, accountType, balance));
 		users.add(new User(id, firstName, lastName, userName, password, accountType, balance));
 
 		System.out.println("User been added Sucesfully! ");
 		MenuOptions.menuOptions();
 
 	}
-	
+
+
+
 }

@@ -8,14 +8,16 @@ import com.revature.utils.ConnectionUtil;
 import com.revature.utils.StreamCloser;
 
 public class TransaDAOImplemnt implements TransDAO {
-
+	/**
+	 * 
+	 */
 	@Override
 	public Transaction getTansaction(int id) {
 		
 		Transaction transaction = null;
 		
 		try (Connection conn = ConnectionUtil.getConnection()) {
-			String query = "SELECT * FROM transactions WHERE id = ?;";
+			String query ="SELECT * FROM transactions WHERE id = ?;";			
 			try (PreparedStatement stmt = conn.prepareStatement(query)) {
 				stmt.setLong(1, id);
 				if (stmt.execute()) {
@@ -32,8 +34,12 @@ public class TransaDAOImplemnt implements TransDAO {
 		
 		return transaction;
 	}
+	
+	/**
+	 * 
+	 */
 	@Override
-	public boolean createTeansaction(Transaction t) {
+	public boolean createTransaction(Transaction t) {
 	
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -43,9 +49,8 @@ public class TransaDAOImplemnt implements TransDAO {
 		try {
 			conn = ConnectionUtil.getConnection();
 			stmt = conn.prepareStatement(query);
-			stmt.setInt(1, t.id);
-			stmt.setString(2, t.transactions);
-			stmt.setInt(3, t.users_id);		
+			stmt.setString(1, t.transactions);
+			stmt.setInt(2, t.users_id);		
 			stmt.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -58,18 +63,28 @@ public class TransaDAOImplemnt implements TransDAO {
 		return true;
 		
 	}
-	
+	/**
+	 * 
+	 */
 	@Override
-	public boolean updateTeansaction(Transaction t) {
+	public boolean updateTransaction(Transaction t) {
 		// TODO Auto-generated method stub
 		return true;
 	}
-
+	/**
+	 * 
+	 */
 	@Override
 	public boolean deleteTransaction(Transaction t) {
 		// TODO Auto-generated method stub
 		return true;
 	}
+	/**
+	 * 
+	 * @param resultSet
+	 * @return
+	 * @throws SQLException
+	 */
 	private Transaction createTransactionFromRS(ResultSet resultSet) throws SQLException {
 		return new Transaction(
 				resultSet.getInt("id"),
