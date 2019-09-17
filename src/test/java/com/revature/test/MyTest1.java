@@ -31,9 +31,7 @@ public class MyTest1 {
 		public void deposit() {
 			Controller.withdraw(-100);
 		}		
-				
-
-		
+					
 		@After
 		public void tearDown() {
 			System.out.println("Getting rid of unneeded objects after test");

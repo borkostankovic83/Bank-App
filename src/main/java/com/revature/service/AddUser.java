@@ -1,12 +1,10 @@
 package com.revature.service;
 
 import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Scanner;
 import com.revature.controller.MenuOptions;
+import com.revature.exception.DuplicateUsernameException;
 import com.revature.model.User;
 import com.revature.repository.AddUserDAO;
 import com.revature.repository.UserDAO;
@@ -36,6 +34,13 @@ public class AddUser {
 		lastName = sc.next();
 		System.out.print("Enter Username: ");
 		userName = sc.next();
+		try {
+			checkUsername(userName);
+		} catch (DuplicateUsernameException e) {
+			System.out.println();
+			System.err.println("Username already exists!");
+			MenuOptions.menuOptions();
+		}
 		System.out.print("Enter Password: ");
 		password = sc.next();
 		System.out.print("Enter Cheking or Saving: ");
@@ -57,12 +62,21 @@ public class AddUser {
 		UserDAO userDAO = new AddUserDAO();
 		userDAO.createUser(new User(id, firstName, lastName, userName, password, accountType, balance));
 		users.add(new User(id, firstName, lastName, userName, password, accountType, balance));
-
+		
 		System.out.println("User been added Sucesfully! ");
 		MenuOptions.menuOptions();
 
 	}
 
+	public static  void checkUsername(String userName) throws DuplicateUsernameException {
+		UserDAO userDAO = new AddUserDAO();
+		User userNew = userDAO.getUser(userName);
+		if (userNew == null) {
 
+		} else {
+			throw new DuplicateUsernameException();
+		}
+		
+	}
 
 }

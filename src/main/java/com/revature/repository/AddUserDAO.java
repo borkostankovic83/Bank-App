@@ -124,7 +124,7 @@ public class AddUserDAO implements UserDAO {
 		ResultSet resultSet = null;
 		Connection conn = null;
 		// List to return
-		List<User> players = new ArrayList<User>();
+		List<User> user = new ArrayList<User>();
 		try {
 			// get connection from ConnectionUtil:
 			conn = ConnectionUtil.getConnection();
@@ -139,7 +139,7 @@ public class AddUserDAO implements UserDAO {
 			// loop through ResultSet
 			while (resultSet.next()) {
 				// At each row in the ResultSet, do the following:
-				players.add(createUserFromRS(resultSet));
+				user.add(createUserFromRS(resultSet));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -150,7 +150,7 @@ public class AddUserDAO implements UserDAO {
 			StreamCloser.close(conn);
 		}
 
-		return players;
+		return user;
 	}
 	/*
 	 *  Here it insert all data to create new user

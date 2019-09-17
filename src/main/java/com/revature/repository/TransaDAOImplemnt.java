@@ -3,7 +3,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import com.revature.model.Transaction;
+import com.revature.service.UsernameAndPassword;
 import com.revature.utils.ConnectionUtil;
 import com.revature.utils.StreamCloser;
 
@@ -12,18 +16,18 @@ public class TransaDAOImplemnt implements TransDAO {
 	 * 
 	 */
 	@Override
-	public Transaction getTansaction(int id) {
+	public Transaction getTransaction(int users_id) {
 		
-		Transaction transaction = null;
+		Transaction t = null;
 		
 		try (Connection conn = ConnectionUtil.getConnection()) {
-			String query ="SELECT * FROM transactions WHERE id = ?;";			
+			String query ="SELECT * FROM transactions WHERE users_id = ?;";			
 			try (PreparedStatement stmt = conn.prepareStatement(query)) {
-				stmt.setLong(1, id);
+				stmt.setLong(1, users_id);
 				if (stmt.execute()) {
 					try (ResultSet resultSet = stmt.getResultSet()) {
 						if (resultSet.next()) {
-							transaction = createTransactionFromRS(resultSet);
+							t = createTransactionFromRS(resultSet);
 						}
 					}
 				}
@@ -32,7 +36,7 @@ public class TransaDAOImplemnt implements TransDAO {
 			e.printStackTrace();
 		}
 		
-		return transaction;
+		return t;
 	}
 	
 	/**
@@ -64,6 +68,48 @@ public class TransaDAOImplemnt implements TransDAO {
 		
 	}
 	/**
+	 * Returns a list of all users in the users table
+	 * 
+	 * 
+	 */
+
+	@Override
+	public List<Transaction> getTransaction() {
+		// Statement and ResultSet (and Connection) interfaces
+		Statement statement = null;
+		ResultSet resultSet = null;
+		Connection conn = null;
+		// List to return
+		List<Transaction> transaction = new ArrayList<Transaction>();
+		try {
+			// get connection from ConnectionUtil:
+			conn = ConnectionUtil.getConnection();
+
+			// create statement from connection
+			statement = conn.createStatement();
+
+			// Statements can execute sql queries:
+			// ResultSet stores the results of a query
+			
+			resultSet = statement.executeQuery("SELECT * FROM transactions WHERE users_id = "+UsernameAndPassword.currentUser.id+";");
+
+			// loop through ResultSet
+			while (resultSet.next()) {
+				// At each row in the ResultSet, do the following:
+				transaction.add(createTransactionFromRS(resultSet));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// close all open resources to prevent memory leak
+			StreamCloser.close(resultSet);
+			StreamCloser.close(statement);
+			StreamCloser.close(conn);
+		}
+
+		return transaction;
+	}
+	/**
 	 * 
 	 */
 	@Override
@@ -89,7 +135,9 @@ public class TransaDAOImplemnt implements TransDAO {
 		return new Transaction(
 				resultSet.getInt("id"),
 				resultSet.getString("transactions"),
-				resultSet.getInt("user_id"));
+				resultSet.getInt("users_id"),
+				resultSet.getTimestamp("last_updated"));
+				
 	}
 
 }

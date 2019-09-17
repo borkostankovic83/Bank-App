@@ -1,10 +1,22 @@
 package com.revature.model;
+import java.util.Date;
 
 public class Transaction {
 	public int id;
 	public String transactions;
 	public int users_id;
+	public Date last_updated;
 	
+
+
+	public Transaction(int id, String transactions, int users_id, Date timestamp) {
+		super();
+		this.id = id;
+		this.transactions = transactions;
+		this.users_id = users_id;
+		this.last_updated = timestamp;
+	}
+
 	public Transaction(int id, String transactions, int users_id) {
 		super();
 		this.id = id;
@@ -21,6 +33,20 @@ public class Transaction {
 		super();
 		this.id = id;
 		 
+	}
+
+	/**
+	 * @return the last_updated
+	 */
+	public Date getLast_updated() {
+		return last_updated;
+	}
+
+	/**
+	 * @param last_updated the last_updated to set
+	 */
+	public void setLast_updated(Date last_updated) {
+		this.last_updated = last_updated;
 	}
 
 	/**
@@ -67,8 +93,11 @@ public class Transaction {
 
 	@Override
 	public String toString() {
-		return "Transaction [id=" + id + ", transactions=" + transactions + ", users_id=" + users_id + "]";
+		return "Transaction [id=" + id + ", transactions=" + transactions + ", users_id=" + users_id + ", last_updated="
+				+ last_updated + "]";
 	}
-	
+
+
+
 	
 }

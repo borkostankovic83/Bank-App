@@ -15,6 +15,7 @@ import com.revature.repository.TransDAO;
 import com.revature.repository.TransaDAOImplemnt;
 import com.revature.repository.UserDAO;
 import com.revature.service.UsernameAndPassword;
+import com.revature.service.ViewAllMyTransactions;
 
 public class Controller {
 	public static Logger logger = Logger.getLogger(Controller.class);
@@ -38,6 +39,7 @@ public class Controller {
 			System.out.println("1. Deposit money.");
 			System.out.println("2. Withdraw money.");
 			System.out.println("3. Check balance.");
+			System.out.println("4. See all Transactions.");
 			System.out.println("0. Logout.");
 			try {
 			userChoice = in.next();}
@@ -71,6 +73,9 @@ public class Controller {
 			case "3":
 				System.out.println("Your balance: $" 
 						+ UsernameAndPassword.currentUser.balance);
+				break;
+			case "4":
+				ViewAllMyTransactions.allCurrentUserTransactions();
 				break;
 			case "0":
 				quit = true;
@@ -143,8 +148,9 @@ public class Controller {
 	 *  Deposit method takes care of logic 
 	 * and add deposit amount to previous amount.
 	 * From there is updated to the database
+	 * @throws IOException 
 	 */
-	private static void deposit(double amount) throws IOException {
+	private static void deposit(double amount) throws IOException  {
 		if (amount <= 0)
 			System.out.println("Can't deposit nonpositive amount.");
 		else {
@@ -157,17 +163,17 @@ public class Controller {
 				}				
 			}
 			// For current user insert deposit informations into transaction table
-						try {
-						TransDAO transDAO = new TransaDAOImplemnt();
-						user_id = UsernameAndPassword.currentUser.id;
-						transactions = "$" + amount + " has been deposited.";
-						
-						transDAO.createTransaction(new Transaction(id, transactions, user_id));
-						transaction.add(new Transaction(id, transactions, user_id));
-						}catch (TransactionFaildException e) {
-							System.out.println("Sorry, cant acces DB");
-							System.out.println("problemm = " + e.getMessage());
-						}
+			try {
+				TransDAO transDAO = new TransaDAOImplemnt();
+				user_id = UsernameAndPassword.currentUser.id;
+				transactions = "$" + amount + " has been deposited.";
+				
+				transDAO.createTransaction(new Transaction(id, transactions, user_id));
+				transaction.add(new Transaction(id, transactions, user_id));
+				}catch (TransactionFaildException e) {
+					System.out.println("Sorry, cant acces DB");
+					System.out.println("problemm = " + e.getMessage());
+				}				
 			
 			try {
 				// BufferedWriter write to file i created

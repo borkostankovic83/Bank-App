@@ -1,6 +1,5 @@
 package com.revature.exception;
 
-import java.io.IOException;
 
 public class TransactionFaildException extends RuntimeException{
 
