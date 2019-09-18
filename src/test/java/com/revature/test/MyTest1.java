@@ -1,5 +1,7 @@
 package com.revature.test;
-import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.InputMismatchException;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -22,14 +24,19 @@ public class MyTest1 {
 			myNeededObject = new Object();
 		}
 		//This test will pass because our withdraw() method throws the expected Exception
-		@Test(expected = FileNotFoundException.class)
+		@Test(expected = InputMismatchException.class)
 		public void withhdraw() {
-			Controller.withdraw(-100);
+			Controller.withdraw(-120);
 		}
 		//This test will pass because our deposit() method throws the expected Exception
-		@Test(expected = FileNotFoundException.class)
+		@Test(expected = InputMismatchException.class )
 		public void deposit() {
-			Controller.withdraw(-100);
+			try {
+				Controller.deposit(-100);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}		
 					
 		@After

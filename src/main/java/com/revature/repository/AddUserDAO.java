@@ -75,8 +75,8 @@ public class AddUserDAO implements UserDAO {
 		return user;
 	}
 	/**
-	 * Return a user found via their username, or null if no user is found
-	 * And checks for password
+	 * Return a user found via their username and 
+	 * password or false if no user is found.
 	 * 
 	 */
 
@@ -219,7 +219,7 @@ public class AddUserDAO implements UserDAO {
 
 	@Override
 	public boolean deleteUser(User u) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 	private User createUserFromRS(ResultSet resultSet) throws SQLException {

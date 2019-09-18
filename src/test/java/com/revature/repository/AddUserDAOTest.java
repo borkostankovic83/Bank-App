@@ -3,112 +3,45 @@ package com.revature.repository;
 import static org.junit.Assert.*;
 
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.revature.exception.DuplicateUsernameException;
+import com.revature.service.AddUser;
+
+
 public class AddUserDAOTest {
+	private static AddUser addUser = null;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		addUser = new AddUser();
 	}
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 	}
-
+	@Before
+	public void setUp() {
+		
+	}
+	
 	@Test
 	public void testGetUserInt() {
-		fail("Not yet implemented");
+		int Id = AddUser.id;
+		assertEquals(1, Id);;
 	}
 
 	@Test
-	public void testGetUserString() {
-		fail("Not yet implemented");
+	public void testGetUserString() throws DuplicateUsernameException {
+		try {
+		AddUser.checkUsername("borko");
+		}catch (DuplicateUsernameException e) {
+			System.out.println(e);
+		}
+		assertTrue(false);
 	}
 
-	@Test
-	public void testGetUserStringString() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetUser() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testCreateUser() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testUpdateUser() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testDeleteUser() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testObject() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetClass() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testHashCode() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testEquals() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testClone() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testToString() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testNotify() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testNotifyAll() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testWaitLong() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testWaitLongInt() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testWait() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testFinalize() {
-		fail("Not yet implemented");
-	}
 
 }

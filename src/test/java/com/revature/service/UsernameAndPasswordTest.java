@@ -12,6 +12,7 @@ public class UsernameAndPasswordTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		
 	}
 
 	@AfterClass
@@ -20,6 +21,8 @@ public class UsernameAndPasswordTest {
 
 	@Before
 	public void setUp() throws Exception {
+		AddUser addUser;
+		addUser = new AddUser();
 	}
 
 	@After
@@ -28,7 +31,7 @@ public class UsernameAndPasswordTest {
 
 	@Test
 	public void testUsernameAndPassword() {
-		fail("Not yet implemented");
+		
 	}
 
 }

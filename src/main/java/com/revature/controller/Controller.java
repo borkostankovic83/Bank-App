@@ -58,16 +58,18 @@ public class Controller {
 				amount = in.nextDouble();				
 				deposit(amount);
 				}catch (InputMismatchException e) {
-					System.out.println("Cant deposit an nonumber!");
+					logger.warn("Can't deposit an nonumber!");
+					displayMenu();
 				}				
 				break;
 			case "2":
 				System.out.print("Amount to withdraw: ");
-				amount = in.nextDouble(); 
 				try {
+				amount = in.nextDouble(); 
 				withdraw(amount);
-				}catch (TransactionFaildException e) {
-				System.out.println(e.getMessage());
+				}catch (InputMismatchException e) {
+					logger.warn("Can't deposit an nonumber!");
+					displayMenu();
 				}
 				break;
 			case "3":
@@ -97,7 +99,7 @@ public class Controller {
 	 * and subtract withdraws amount to previous amount.
 	 * From there is updated to the database
 	 */
-	public static void withdraw(double amount) {
+	public static void withdraw(double amount)  {
 		if (amount <= 0 || amount > UsernameAndPassword.currentUser.balance)
 			System.out.println("Withdrawal can't be completed.");				
 		else {
@@ -136,6 +138,7 @@ public class Controller {
 				writer.close();
 			} catch (FileNotFounException e) {
 				System.out.println(e.getMessage());
+				logger.error(e.getMessage());
 			} catch (IOException e) {				
 				e.printStackTrace();
 			}
@@ -150,7 +153,7 @@ public class Controller {
 	 * From there is updated to the database
 	 * @throws IOException 
 	 */
-	private static void deposit(double amount) throws IOException  {
+	public static void deposit(double amount) throws IOException  {
 		if (amount <= 0)
 			System.out.println("Can't deposit nonpositive amount.");
 		else {
@@ -186,7 +189,7 @@ public class Controller {
 				writer.append("$" + amount + " has been deposited.");
 				writer.close();
 			} catch (FileNotFounException e) {
-				System.out.println(e);
+				logger.error(e);
 			}					
 			// Logger prints to console and as well differently 
 			//prints in logs file. So i don't need sysout anymore. 
